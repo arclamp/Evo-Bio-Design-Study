@@ -23,9 +23,7 @@ let tooltip = wrap.append("div")
 .attr("id", "tooltip")
 .style("opacity", 0);
 
-
-loadData(d3.json, './public/data/anolis-edges.json', 'edge').then(async edges => {
-
+function go(edges, edgeLen, leafChar, labels, attributes) {
     //helper function to create array of unique elements
     Array.prototype.unique = function() {
         return this.filter(function (value, index, self) { 
@@ -33,23 +31,16 @@ loadData(d3.json, './public/data/anolis-edges.json', 'edge').then(async edges =>
         });
     }
 
-    let edgeLen = await loadData(d3.json, './public/data/anolis-edge-length.json', 'edge');
-
     //Mapping data together/////
     let edgeSource = edges.rows.map(d=> d.V1);
     let leaves = edges.rows.filter(f=> edgeSource.indexOf(f.V2) == -1 );
 
-    let leafChar = await loadData(d3.json, './public/data/anolisLeafChar.json', '');
-
-    let labels = await loadData(d3.json, './public/data/anolis-labels.json', '');
-
-
     ///MAKE A ESTIMATED SCALES THING
     let calculatedAtt = {
-        'awesomeness' : await loadData(d3.json, './public/data/anolis-awesomeness-res.json', 'continuous'),
-        'island' : await loadData(d3.json, './public/data/anolis-island-res.json', 'discrete'),
-        'SVL' : await loadData(d3.json, './public/data/anolis-svl-res.json', 'continuous'),
-        'ecomorph': await loadData(d3.json, './public/data/anolis-ecomorph-res.json', 'discrete'),
+        'awesomeness' : attributes.awesomeness,
+        'island' : attributes.island,
+        'SVL' : attributes.SVL,
+        'ecomorph': attributes.ecomorph,
     }
 
     let colorKeeper = [
@@ -94,26 +85,55 @@ loadData(d3.json, './public/data/anolis-edges.json', 'edge').then(async edges =>
     
       /// LOWER ATTRIBUTE VISUALIZATION ///
    updateMainView(calculatedScales, 'edgeLength');
-});
-/*
-loadData(d3.json, './public/data/geospiza_with_attributes.json').then(data=> {
-    let pathArray = pullPath([], [data], [], [], 0);
+}
 
-    //console.log('pa',pathArray);
-});*/
-/*
-loadData(d3.json, './public/data/geospiza_loop_all_asr_features.json').then(data=> {
-    let pathArray = pullPath([], [data], [], [], 0);
+(async () => {
+  // Get query arguments.
+  const query = new URLSearchParams(window.location.search);
+  const params = {
+    multinet: query.get('multinet'),
+    workspace: query.get('workspace'),
+    graph: query.get('graph'),
+  };
 
-    console.log('pa RICH',pathArray);
-});*/
-/*
-loadData(d3.json, './public/data/anolis_rich_ASR_pad_vs_tail.json').then(data=> {
-    let pathArray = pullPath([], [data], [], [], 0);
+  if (params.multinet && params.workspace && params.graph) {
+    console.log(params);
+  } else {
+    const edges = await loadData(d3.json, './public/data/anolis-edges.json', 'edge');
+    const edgeLen = await loadData(d3.json, './public/data/anolis-edge-length.json', 'edge');
+    const leafChar = await loadData(d3.json, './public/data/anolisLeafChar.json', '');
+    const labels = await loadData(d3.json, './public/data/anolis-labels.json', '');
 
-    console.log('anolis RICH',pathArray);
-});*/
+    const awesomeness = await loadData(d3.json, './public/data/anolis-awesomeness-res.json', 'continuous');
+    const island = await loadData(d3.json, './public/data/anolis-island-res.json', 'discrete');
+    const SVL = await loadData(d3.json, './public/data/anolis-svl-res.json', 'continuous');
+    const ecomorph = await loadData(d3.json, './public/data/anolis-ecomorph-res.json', 'discrete');
+    const attributes = {
+      awesomeness,
+      island,
+      SVL,
+      ecomorph,
+    };
 
+    go(edges, edgeLen, leafChar, labels, attributes);
+  }
 
+  /*
+  loadData(d3.json, './public/data/geospiza_with_attributes.json').then(data=> {
+      let pathArray = pullPath([], [data], [], [], 0);
 
+      //console.log('pa',pathArray);
+  });*/
+  /*
+  loadData(d3.json, './public/data/geospiza_loop_all_asr_features.json').then(data=> {
+      let pathArray = pullPath([], [data], [], [], 0);
 
+      console.log('pa RICH',pathArray);
+  });*/
+  /*
+  loadData(d3.json, './public/data/anolis_rich_ASR_pad_vs_tail.json').then(data=> {
+      let pathArray = pullPath([], [data], [], [], 0);
+
+      console.log('anolis RICH',pathArray);
+  });*/
+})();
