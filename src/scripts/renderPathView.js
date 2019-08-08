@@ -29,7 +29,7 @@ export function drawPathsAndAttributes(pathData, main, calculatedScales, moveMet
     
     drawContAtt(predictedAttrGrps, moveMetric, collapsed);
     drawDiscreteAtt(predictedAttrGrps, calculatedScales, moveMetric, collapsed);
-    sizeAndMove(main.select('#main-path-view'), attributeWrapper, pathData, (attrMove * attributeHeight))
+    sizeAndMove(main.select('#main-path-view'), attributeWrapper, pathData, (attrMove * attributeHeight));
 
 }
 
@@ -157,7 +157,7 @@ function collapsedPathGen(data){
         let step = i === 0 ? 0 : 1;
         let test = (p.realVal > data[i-step].realVal) ? 1 : 18;
         p.change = test;
-    })
+    });
 }
 
 async function continuousPaths(innerTimeline, moveMetric, collapsed){

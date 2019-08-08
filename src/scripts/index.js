@@ -29,7 +29,7 @@ function go(edges, edgeLen, leafChar, labels, attributes) {
         return this.filter(function (value, index, self) { 
             return self.indexOf(value) === index;
         });
-    }
+    };
 
     //Mapping data together/////
     let edgeSource = edges.rows.map(d=> d.V1);
@@ -41,7 +41,7 @@ function go(edges, edgeLen, leafChar, labels, attributes) {
         'island' : attributes.island,
         'SVL' : attributes.SVL,
         'ecomorph': attributes.ecomorph,
-    }
+    };
 
     let colorKeeper = [
         ['#0dc1d1', '#c8f7fd'],
@@ -53,7 +53,7 @@ function go(edges, edgeLen, leafChar, labels, attributes) {
         ['#493267'],
         ['#a40b0b'],
         ['#0095b6'],
-    ]
+    ];
 
     ////CALCULATE THE SCALES FOR EACH ATTRIBUTE////////
     let calculatedScales = calculateScales(calculatedAtt, colorKeeper);

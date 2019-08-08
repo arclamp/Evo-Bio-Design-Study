@@ -30,7 +30,7 @@ function updateBrush(treeBrush, scales){
 
     let filterOb = addFilter('data-filter', 'topology', brushId, treeFilter, [...data], [...test], null);
 
-    console.log('fm', filterMaster)
+    console.log('fm', filterMaster);
 
     updateMainView(scales, 'edgeLength');
    
@@ -59,7 +59,7 @@ function updateBrush(treeBrush, scales){
     let label = button.append('h6').text('Tree Filter');
 
     let xSpan = label.append('i').classed('close fas fa-times', true);
-    xSpan.on('click', async (d, i, n)=> {
+    xSpan.on('click', async (d, i, n) => {
         removeFilter(brushId);
         await updateMainView(scales, 'edgeLength');
         d3.selectAll('.selected').classed('selected', false);
@@ -100,7 +100,7 @@ function treeFilter(data, selectedNodes){
     return data.filter(path=> {
         let nodeNames = path.map(no=> no.node);
         let booArray = nodeNames.map(id=> selectedNodes.indexOf(id) > -1);
-        return booArray.indexOf(true) > -1
+        return booArray.indexOf(true) > -1;
     });
 }
 
@@ -123,7 +123,7 @@ export function renderTree(nestedData, normedPaths, calculatedScales, sidebar, l
             });
         }
     }
-    addingEdgeLength(0, nestedData)
+    addingEdgeLength(0, nestedData);
 
 //  assigns the data to a hierarchy using parent-child relationships
     var treenodes = d3.hierarchy(nestedData);

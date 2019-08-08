@@ -13,7 +13,7 @@ export function removeFilter(filterId){
 }
 
 export function addFilter(filterType, attType, filterId, filFunction, oldData, newData, extra){
-    let filterOb = {'filterType': filterType, 'attributeType': attType, 'filterId': filterId, 'filterFunction':filFunction, 'before-data': oldData, 'data': newData}
+    let filterOb = {'filterType': filterType, 'attributeType': attType, 'filterId': filterId, 'filterFunction':filFunction, 'before-data': oldData, 'data': newData};
     if(extra != null){
         extra.forEach(ex=> {
             filterOb[ex[0]] = ex[1];
@@ -121,7 +121,7 @@ function stateFilter(filterDiv, filterButton, normedPaths, main, moveMetric, sca
                     let xSpan = button.append('i').classed('close fas fa-times', true);
                     xSpan.on('click', ()=> {
                         removeFilter(filId);
-                        updateMainView(scales, 'edgeLength')
+                        updateMainView(scales, 'edgeLength');
                         d3.selectAll('.link-not-there').classed('link-not-there', false);
                         d3.selectAll('.node-not-there').classed('node-not-there', false);
                         button.remove();
@@ -187,11 +187,11 @@ function stateFilter(filterDiv, filterButton, normedPaths, main, moveMetric, sca
                     let filId = 'c-'+filterMaster.filter(f=> f.attributeType === 'continuous').length;
                     let filterOb = addFilter('data-filter', 'continuous', filId, continuousFilter, [...data], [...test], [['ranges', [predictedFilter, observedFilter]], 'attribute', selectedOption]);
 
-                    console.log('fm', filterMaster)
+                    console.log('fm', filterMaster);
 
                     ////DRAW THE PATHS
                  
-                    updateMainView(scales, moveMetric)
+                    updateMainView(scales, moveMetric);
 
                     ///DIMMING THE FILTERED OUT NODES//////
 
@@ -375,8 +375,8 @@ function renderAttToggles(filterDiv, normedPaths, main, scales, moveMetric){
         });
         filterMaster = newFilMaster;
 
-        console.log('filtermaster in render att toggles', filterMaster)
-        updateMainView(scales, moveMetric)
+        console.log('filtermaster in render att toggles', filterMaster);
+        updateMainView(scales, moveMetric);
     });
     let labelText = labelGroups.append('text').text(d=> d).style('font-size', 10);
     labelText.attr('transform', 'translate(10, 4)');  
