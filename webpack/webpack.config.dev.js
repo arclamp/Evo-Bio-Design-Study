@@ -37,6 +37,10 @@ module.exports = merge(common, {
         loader: 'eslint-loader',
         options: {
           emitWarning: true,
+          parser: 'babel-eslint',
+          parserOptions: {
+            ecmaVersion: 6,
+          },
         }
       },
       {
